@@ -34,7 +34,7 @@ jobs:
 
             - name: Main
               run: |
-                tree -L 2 --prune -I 'node_modules'
+                tree -L 2 ../ --prune -I 'node_modules'
                 pwd
             # - name: Upload artifact 📡
             #   uses: actions/upload-pages-artifact@v3
