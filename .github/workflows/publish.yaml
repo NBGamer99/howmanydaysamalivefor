@@ -34,7 +34,7 @@ jobs:
 
             - name: Main
               run: |
-                ls
+                tree -L 3 ./
             # - name: Upload artifact 📡
             #   uses: actions/upload-pages-artifact@v3
             #   with:
