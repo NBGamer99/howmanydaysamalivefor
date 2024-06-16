@@ -29,16 +29,25 @@ jobs:
               with:
                   static_site_generator: next
 
-            - name: Build with Next.js 🏗️
-              run: npm run build --if-present
+            - name: Restore cache ⚙️
+              uses: actions/cache@v4
+              with:
+                path: |
+                  .next/cache
+                key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+                restore-keys: |
+                  ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
 
-            - run: tree -L 2 --prune -I 'node_modules'
+            - name: Install dependencies
+              run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
-            # - name:
-            # - name: Upload artifact 📡
-            #   uses: actions/upload-pages-artifact@v3
-            #   with:
-            #       path: ./out
+            - name: Build with Next.js
+              run: ${{ steps.detect-package-manager.outputs.runner }} next build
+
+            - name: Upload artifact
+              uses: actions/upload-pages-artifact@v3
+              with:
+                path: ./out
 
     deploy:
         environment:
