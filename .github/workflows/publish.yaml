@@ -32,7 +32,7 @@ jobs:
             - name: Build with Next.js 🏗️
               run: npm run build --if-present
 
-            - run: tree
+            - run: tree -L 2 --prune -I 'node_modules'
 
             # - name:
             # - name: Upload artifact 📡
